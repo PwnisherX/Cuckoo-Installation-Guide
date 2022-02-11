@@ -91,6 +91,23 @@ sudo -H pip install -U cuckoo
 
 cuckoo
 
+************
+**OPTIONAL**
+
+mongo
+
+use cuckoo
+
+db.createUser({ user: "cuckoo", pwd: "SOME_OTHER_STRONG_PASSWORD", roles: [ { role: "dbOwner", db: "cuckoo" } ] })
+
+exit
+
+sudo nano ./cuckoo/conf/reporting.conf
+Line 45 - enabled = yes
+Line 48 - db = cuckoo
+Line 52 - username = cuckoo
+Line 53 - password = SOME_OTHER_STRONG_PASSWORD
+
 sudo apt install -y net-tools
 
 ifconfig
@@ -148,6 +165,9 @@ Start the VM and install it.
 
 Once installed:
 
+Go to User Accounts and enable Administrator with no password as this will be used instead of the username you entered when installing Windows.
+There seems to be a permission issue and only the System Administator account can fix.
+
 Edit Group Policy
 
 1. Expand Computer Configuration > Windows Settings > Security Settings > Local Policies > Security Options. Scroll down to the User Account Control options
@@ -170,10 +190,11 @@ Install Virtualbox Guest and Create Shared Folder
 
 Download (from host) and install these msi on Windows 7
 
-https://www.python.org/ftp/python/2.7.8/python-2.7.8.amd64.msi 
-https://pypi.python.org/packages/2.7/P/Pillow/Pillow-2.5.3.win-amd64-py2.7.exe#md5=33c3a581ff1538b4f79b4651084090c8 
+https://www.python.org/ftp/python/2.7.8/python-2.7.8.amd64.msi ***DOWNLOAD AND INSTALL 32BIT OPTION***
 
-Upload the agent.py from ~/.cuckoo/agent to Win7 and copy it to C:\Users\*USERNAME*\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup 
+https://pypi.python.org/packages/2.7/P/Pillow/Pillow-2.5.3.win-amd64-py2.7.exe#md5=33c3a581ff1538b4f79b4651084090c8 ***DOWNLOAD AND INSTALL 32BIT OPTION***
+
+Upload the agent.py from ~/.cuckoo/agent to Win7 and copy it to C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup 
 
 On Windows 7 Organizse > Folder Options enable "Show hidden files"
 
